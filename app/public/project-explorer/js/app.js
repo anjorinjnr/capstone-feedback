@@ -80,7 +80,7 @@ if (window.location.href.includes('register.html')) {
             // const value = Object.fromEntries(data.entries());
 
             let regInfo = {
-                firstname: document.getElementById("firstname").value,
+                firstName: document.getElementById("firstname").value,
                 lastname: document.getElementById("lastname").value,
                 email: document.getElementById("email").value,
                 password: document.getElementById("password").value,
@@ -88,6 +88,7 @@ if (window.location.href.includes('register.html')) {
                 program: document.getElementById("program").value,
                 graduationYear: document.getElementById("graduationYear").value,
             }
+            console.log(regInfo)
 
             // const boss = JSON.stringify(value, null, '  ');
             fetch('/api/register', {
