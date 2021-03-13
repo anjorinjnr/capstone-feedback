@@ -76,13 +76,23 @@ if (window.location.href.includes('register.html')) {
 
         function handleSubmit(event) {
             event.preventDefault();
-            const data = new FormData(event.target);
-            const value = Object.fromEntries(data.entries());
+            // const data = new FormData(event.target);
+            // const value = Object.fromEntries(data.entries());
+
+            let regInfo = {
+                firstname: document.getElementById("firstname").value,
+                lastname: document.getElementById("lastname").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value,
+                matricNumber: document.getElementById("matricNumber").value,
+                program: document.getElementById("program").value,
+                graduationYear: document.getElementById("graduationYear").value,
+            }
 
             // const boss = JSON.stringify(value, null, '  ');
             fetch('/api/register', {
                 method: 'POST',
-                body: JSON.stringify(value), // All form data
+                body: JSON.stringify(regInfo), // All form data
                 headers: {
                     'Content-Type': 'application/json',
                 },
