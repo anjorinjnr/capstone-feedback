@@ -13,7 +13,7 @@ function getCookie(name) {
 }
 
 if (document.cookie) {
-    const cookieValue = document.cookie.split('; ').find(row => row.startsWith('uid=')).split('=')[1];
+    const cookieValue = getCookie("uid");
     let cookieExists = cookieValue ? true : false;
     if (cookieExists) {
         fetch(`/api/users/${cookieValue}`)
@@ -282,7 +282,7 @@ if (window.location.href.includes('viewproject.html')) {
 
         let project_author = document.getElementById("project_author");
 
-        const cookieValue = document.cookie.split('; ').find(row => row.startsWith('uid=')).split('=')[1];
+        const cookieValue = getCookie("uid");
         fetch(`/api/users/${cookieValue}`)
             .then(res => res.json())
             .then((res) => {
