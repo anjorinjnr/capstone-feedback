@@ -80,7 +80,7 @@ if (window.location.href.includes('register.html')) {
             // const value = Object.fromEntries(data.entries());
 
             let regInfo = {
-                firstName: document.getElementById("firstname").value,
+                firstname: document.getElementById("firstname").value,
                 lastname: document.getElementById("lastname").value,
                 email: document.getElementById("email").value,
                 password: document.getElementById("password").value,
