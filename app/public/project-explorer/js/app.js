@@ -288,17 +288,19 @@ if (window.location.href.includes('viewproject.html')) {
 
                 tagJoin = tagArray.join("");
                 project_tags.innerHTML = tagJoin;
+
+                console.log(res)
+                let project_author = document.getElementById("project_author");
+
+                fetch(`/api/users/${res.createdBy}`)
+                    .then(res => res.json())
+                    .then((res) => {
+                        console.log(res)
+                        project_author.textContent = `${res.lastname} ${res.firstname}`
+                    })
+                    .catch(e => console.log(e))
             })
             .catch(e => console.log(e))
 
-        let project_author = document.getElementById("project_author");
-
-        const cookieValue = getCookie("uid");
-        fetch(`/api/users/${cookieValue}`)
-            .then(res => res.json())
-            .then((res) => {
-                project_author.textContent = `${res.lastname} ${res.firstname}`
-            })
-            .catch(e => console.log(e))
     }
 }
