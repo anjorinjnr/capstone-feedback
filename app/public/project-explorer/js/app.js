@@ -106,7 +106,7 @@ if (window.location.href.includes('register.html')) {
                     else {
                         myAlert.style.display = "block"
                         let errorData = response.errors.map((item) => {
-                            return `<b>${item}</b><br>`
+                            return `${item}<br>`
                         })
                         let errDa = errorData.join("");
                         myAlert.innerHTML = errDa;
