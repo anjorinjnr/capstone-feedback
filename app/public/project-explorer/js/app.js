@@ -212,46 +212,44 @@ if (window.location.href.includes('createproject.html')) {
 if (window.location.href.includes('index.html')) {
     window.onload = function () {
 
-        if (document.cookie) {
 
-            let showcase = document.querySelector(".showcase");
-            showcase.innerHTML = "";
+        let showcase = document.querySelector(".showcase");
+        showcase.innerHTML = "";
 
-            fetch("/api/projects")
-                .then(res => res.json())
-                .then((response) => {
-                    for (let i = 0; i < 4; i++) {
-                        // Create card contents
-                        let projectTitle = document.createElement('a');
-                        projectTitle.href = `viewproject.html?id=${response[i].id}`;
-                        projectTitle.className = "card-title";
-                        projectTitle.textContent = response[i].name;
-                        let projectAuthor = document.createElement('h6')
-                        projectAuthor.className = "card-subtitle";
-                        projectAuthor.textContent = response[i].authors
-                        let projectAbstract = document.createElement('p')
-                        projectAbstract.className = "card-text";
-                        projectAbstract.textContent = response[i].abstract
-                        let projectTags = document.createElement('p')
-                        projectTags.className = "card-text";
-                        projectTags.textContent = response[i].tags
-                        // Create card body div
-                        let cardBody = document.createElement('div');
-                        cardBody.className = "card-body";
-                        // Create card main div
-                        let cardMain = document.createElement('div');
-                        cardMain.className = "card";
-                        cardMain.classList.add("col");
-                        // Append all appendables
-                        cardMain.appendChild(cardBody);
-                        cardBody.appendChild(projectTitle);
-                        cardBody.appendChild(projectAuthor);
-                        cardBody.appendChild(projectAbstract);
-                        cardBody.appendChild(projectTags);
-                        document.getElementsByClassName("showcase")[0].appendChild(cardMain);
-                    }
-                })
-        }
+        fetch("/api/projects")
+            .then(res => res.json())
+            .then((response) => {
+                for (let i = 0; i < 4; i++) {
+                    // Create card contents
+                    let projectTitle = document.createElement('a');
+                    projectTitle.href = `viewproject.html?id=${response[i].id}`;
+                    projectTitle.className = "card-title";
+                    projectTitle.textContent = response[i].name;
+                    let projectAuthor = document.createElement('h6')
+                    projectAuthor.className = "card-subtitle";
+                    projectAuthor.textContent = response[i].authors
+                    let projectAbstract = document.createElement('p')
+                    projectAbstract.className = "card-text";
+                    projectAbstract.textContent = response[i].abstract
+                    let projectTags = document.createElement('p')
+                    projectTags.className = "card-text";
+                    projectTags.textContent = response[i].tags
+                    // Create card body div
+                    let cardBody = document.createElement('div');
+                    cardBody.className = "card-body";
+                    // Create card main div
+                    let cardMain = document.createElement('div');
+                    cardMain.className = "card";
+                    cardMain.classList.add("col");
+                    // Append all appendables
+                    cardMain.appendChild(cardBody);
+                    cardBody.appendChild(projectTitle);
+                    cardBody.appendChild(projectAuthor);
+                    cardBody.appendChild(projectAbstract);
+                    cardBody.appendChild(projectTags);
+                    document.getElementsByClassName("showcase")[0].appendChild(cardMain);
+                }
+            })
     }
 }
 
