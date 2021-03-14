@@ -20,7 +20,7 @@ if (document.cookie) {
             .then(res => res.json())
             .then((res) => {
 
-                let eve = `<li class="nav-item"><a class="nav-link" id ="logout">Logout</a></li><li class="nav-item"><a class="nav-link" id ="username">Hi, ${res.firstname}</a></li>`
+                let eve = `<li class="nav-item"><a class="nav-link" id ="logout">Logout</a></li><li class="nav-item" id ="username"><a class="nav-link" >Hi, ${res.firstname}</a></li>`
                 every.innerHTML = eve;
 
                 let logout = document.getElementById("logout");
