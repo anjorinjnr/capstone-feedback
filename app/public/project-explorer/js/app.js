@@ -168,7 +168,7 @@ if (window.location.href.includes('createproject.html')) {
             window.location.replace('login.html');
         }
 
-        if (document.cookie) {
+        if (cookieExists) {
             const createProjectForm = document.getElementById("createProjectForm");
             const myAlert = document.getElementById("myAlert")
             myAlert.style.display = "none";
