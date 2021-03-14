@@ -278,24 +278,16 @@ if (window.location.href.includes('viewproject.html')) {
                 }).join("");
                 project_authors.innerHTML = authors;
 
-                const project_tags = document.getElementById("project_tags");
-                let tag = res.tags[0].split(" ");
-                let tagArray = []
 
-                for (i = 0; i < tag.length; i++) {
-                    tagArray.push(`<b>${tag[i]}</b>`)
-                }
+                let projectTags = res.tags;
+                document.getElementById("project_tags").innerHTML = projectTags
 
-                tagJoin = tagArray.join("");
-                project_tags.innerHTML = tagJoin;
 
-                console.log(res)
                 let project_author = document.getElementById("project_author");
 
                 fetch(`/api/users/${res.createdBy}`)
                     .then(res => res.json())
                     .then((res) => {
-                        console.log(res)
                         project_author.textContent = `${res.firstname} ${res.lastname} `
                     })
                     .catch(e => console.log(e))
