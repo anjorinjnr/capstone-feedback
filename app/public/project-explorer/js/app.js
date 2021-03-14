@@ -88,7 +88,6 @@ if (window.location.href.includes('register.html')) {
                 program: document.getElementById("program").value,
                 graduationYear: document.getElementById("graduationYear").value,
             }
-            console.log(regInfo)
 
             // const boss = JSON.stringify(value, null, '  ');
             fetch('/api/register', {
@@ -109,8 +108,8 @@ if (window.location.href.includes('register.html')) {
                         let errorData = response.errors.map((item) => {
                             return `<b>${item}</b><br>`
                         })
-                        errorData.join("");
-                        myAlert.innerHTML = errorData;
+                        let errDa = errorData.join("");
+                        myAlert.innerHTML = errDa;
                     }
                 })
                 .catch(e => console.log(e));
