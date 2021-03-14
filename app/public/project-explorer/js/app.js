@@ -296,7 +296,7 @@ if (window.location.href.includes('viewproject.html')) {
                     .then(res => res.json())
                     .then((res) => {
                         console.log(res)
-                        project_author.textContent = `${res.lastname} ${res.firstname}`
+                        project_author.textContent = `${res.firstname} ${res.lastname} `
                     })
                     .catch(e => console.log(e))
             })
