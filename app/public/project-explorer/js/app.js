@@ -161,54 +161,49 @@ if (window.location.href.includes('login.html')) {
 if (window.location.href.includes('createproject.html')) {
     window.onload = function () {
 
-        const cookieValue = getCookie("uid");
-        let cookieExists = cookieValue ? true : false;
-
-        if (!cookieExists) {
-            window.location.replace('login.html');
+        let cookieCheck = document.cookie.split(';').some((item) => item.trim().startsWith('uid='));
+        if (!cookieCheck) {
+            window.location.replace('login.html'); // redirect user to login.html page if cookie doesn't exist
         }
 
-        if (cookieExists) {
-            const createProjectForm = document.getElementById("createProjectForm");
-            const myAlert = document.getElementById("myAlert")
-            myAlert.style.display = "none";
+        const createProjectForm = document.getElementById("createProjectForm");
+        const myAlert = document.getElementById("myAlert")
+        myAlert.style.display = "none";
 
-            function handleSubmit(event) {
-                event.preventDefault();
-                let tagsInput = (document.getElementById("tags").value).split(",");
-                let authorsInput = (document.getElementById("authors").value).split(",");
-                let projectInfo = {
-                    name: document.getElementById("name").value,
-                    abstract: document.getElementById("abstract").value,
-                    tags: tagsInput,
-                    authors: authorsInput,
-                }
-                console.log(projectInfo)
-
-                fetch('/api/projects', {
-                    method: 'POST',
-                    body: JSON.stringify(projectInfo), // All form data
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
-                    .then(response => response.json())
-                    .then((response) => {
-                        if (response.status === "ok") {
-                            window.location.replace('index.html'); // redirect user to index.html page
-                        }
-                        else {
-                            myAlert.style.display = "block"
-                            let errorData = response.errors.map((item) => {
-                                return `${item}<br>`
-                            }).join("");
-                            myAlert.innerHTML = errorData;
-                        }
-                    })
-                    .catch(e => console.log(e));
+        function handleSubmit(event) {
+            event.preventDefault();
+            let tagsInput = (document.getElementById("tags").value).split(",");
+            let authorsInput = (document.getElementById("authors").value).split(",");
+            let projectInfo = {
+                name: document.getElementById("name").value,
+                abstract: document.getElementById("abstract").value,
+                tags: tagsInput,
+                authors: authorsInput,
             }
-            createProjectForm.addEventListener('submit', handleSubmit);
+
+            fetch('/api/projects', {
+                method: 'POST',
+                body: JSON.stringify(projectInfo), // All form data
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => response.json())
+                .then((response) => {
+                    if (response.status === "ok") {
+                        window.location.replace('index.html'); // redirect user to index.html page
+                    }
+                    else {
+                        myAlert.style.display = "block"
+                        let errorData = response.errors.map((item) => {
+                            return `${item}<br>`
+                        }).join("");
+                        myAlert.innerHTML = errorData;
+                    }
+                })
+                .catch(e => console.log(e));
         }
+        createProjectForm.addEventListener('submit', handleSubmit);
 
     }
 }
