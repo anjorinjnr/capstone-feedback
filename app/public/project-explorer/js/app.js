@@ -161,6 +161,13 @@ if (window.location.href.includes('login.html')) {
 if (window.location.href.includes('createproject.html')) {
     window.onload = function () {
 
+        const cookieValue = getCookie("uid");
+        let cookieExists = cookieValue ? true : false;
+
+        if (!cookieExists) {
+            window.location.replace('login.html');
+        }
+
         if (document.cookie) {
             const createProjectForm = document.getElementById("createProjectForm");
             const myAlert = document.getElementById("myAlert")
@@ -193,9 +200,8 @@ if (window.location.href.includes('createproject.html')) {
                         else {
                             myAlert.style.display = "block"
                             let errorData = response.errors.map((item) => {
-                                return `<b>${item}</b><br>`
-                            })
-                            errorData.join("");
+                                return `${item}<br>`
+                            }).join("");
                             myAlert.innerHTML = errorData;
                         }
                     })
