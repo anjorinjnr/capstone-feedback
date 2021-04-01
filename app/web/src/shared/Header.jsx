@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, FormControl, Nav, Navbar } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 const Header = () => {
-  const every = document.getElementById("every");
-
+  const [show, setShow] = useState(false);
+  const [name, setName] = useState("");
   let history = useHistory();
 
   function getCookie(name) {
@@ -25,14 +25,9 @@ const Header = () => {
       fetch(`/api/users/${cookieValue}`)
         .then((res) => res.json())
         .then((res) => {
-          document.getElementById("signup").style.display = "none";
-          document.getElementById("login").style.display = "none";
-          document.getElementById("logout").style.display = "block";
-          document.getElementById("username").style.display = "block";
-
-          document.getElementById(
-            "username"
-          ).innerText = `Hi, ${res.firstname}`;
+          const { firstname } = res;
+          setShow(true);
+          setName(`Hi, ${firstname}`);
         })
         .catch((e) => console.log(e));
     }
@@ -61,24 +56,19 @@ const Header = () => {
             <Nav.Link href="#features">Submit</Nav.Link>
           </Nav>
           <Nav id="every">
-            <Nav.Link href="/signup" id="signup">
-              Sign Up
-            </Nav.Link>
-            <Nav.Link href="/login" id="login">
-              Login
-            </Nav.Link>
-            <Nav.Link
-              href="/"
-              style={{ display: "none" }}
-              id="logout"
-              onClick={handleLogout}
-            >
-              Logout
-            </Nav.Link>
-            <Navbar.Text
-              id="username"
-              style={{ display: "none" }}
-            ></Navbar.Text>
+            {show ? (
+              <>
+                <Nav.Link href="/" onClick={handleLogout}>
+                  Logout
+                </Nav.Link>
+                <Navbar.Text>{name}</Navbar.Text>
+              </>
+            ) : (
+              <>
+                <Nav.Link href="/signup">Sign Up</Nav.Link>
+                <Nav.Link href="/login">Login</Nav.Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

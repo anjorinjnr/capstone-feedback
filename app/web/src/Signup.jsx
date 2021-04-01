@@ -13,8 +13,9 @@ const MainSignup = () => {
   const [prog, setProg] = useState("");
   const [matric, setMatric] = useState("");
   const [gyears, setGyears] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState([]);
 
-  let myAlert = document.getElementById("myAlert");
   let history = useHistory();
 
   useEffect(() => {
@@ -83,12 +84,8 @@ const MainSignup = () => {
           document.cookie = `uid=${response.data.id}; domain=; path=/ `;
           history.push("/");
         } else {
-          myAlert.style.display = "block";
-          let errorData = response.errors.map((item) => {
-            return `${item}<br>`;
-          });
-          let errDa = errorData.join("");
-          myAlert.innerHTML = errDa;
+          setShowAlert(true);
+          setAlertText(response.errors);
         }
       })
       .catch((e) => console.log(e));
@@ -99,11 +96,16 @@ const MainSignup = () => {
       <div className="mx-auto w-50 p-3 mw-70">
         <h1>Signup</h1>
         <Form onSubmit={handlesubmit}>
-          <Alert
-            variant="danger"
-            style={{ display: "none" }}
-            id="myAlert"
-          ></Alert>
+          <Alert variant="danger" show={showAlert}>
+            {alertText.map((text) => {
+              return (
+                <>
+                  {text}
+                  <br />
+                </>
+              );
+            })}
+          </Alert>
           <Form.Row>
             <Form.Group as={Col}>
               <Form.Label>First Name:</Form.Label>

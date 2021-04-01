@@ -16,6 +16,8 @@ const CreateProjectForm = () => {
   const [abstract, setAbstract] = useState("");
   const [authors, setAuthors] = useState("");
   const [tags, setTags] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState([]);
 
   const myAlert = document.getElementById("myAlert");
 
@@ -65,13 +67,14 @@ const CreateProjectForm = () => {
         if (response.status === "ok") {
           history.push("/");
         } else {
-          myAlert.style.display = "block";
-          let errorData = response.errors
-            .map((item) => {
-              return `${item}<br>`;
-            })
-            .join("");
-          myAlert.innerHTML = errorData;
+          setShowAlert(true);
+          setAlertText(response.errors);
+          // let errorData = response.errors
+          //   .map((item) => {
+          //     return `${item}<br>`;
+          //   })
+          //   .join("");
+          // myAlert.innerHTML = errorData;
         }
       })
       .catch((e) => console.log(e));
@@ -81,11 +84,16 @@ const CreateProjectForm = () => {
       <div className="mx-auto w-50 p-3 mw-70">
         <h3>Submit Project</h3>
         <Form onSubmit={handleSubmit}>
-          <Alert
-            variant="danger"
-            style={{ display: "none" }}
-            id="myAlert"
-          ></Alert>
+          <Alert variant="danger" show={showAlert}>
+            {alertText.map((text) => {
+              return (
+                <>
+                  {text}
+                  <br />
+                </>
+              );
+            })}
+          </Alert>
           <Form.Group>
             <Form.Label>Project Name</Form.Label>
             <Form.Control

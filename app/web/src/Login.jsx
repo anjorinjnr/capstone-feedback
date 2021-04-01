@@ -6,8 +6,9 @@ import { useHistory } from "react-router";
 const BuildForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState("");
 
-  const myAlert = document.getElementById("myAlert");
   let history = useHistory();
 
   const handleChange = (e) => {
@@ -44,9 +45,8 @@ const BuildForm = () => {
           document.cookie = `uid=${response.data.id}; domain=; path=/ `;
           history.push("/");
         } else {
-          myAlert.style.display = "block";
-          let errorData = `<b>Invalid email/password</b>`;
-          myAlert.innerHTML = errorData;
+          setShowAlert(true);
+          setAlertText("Invalid email/password");
         }
       })
       .catch((e) => console.log(e));
@@ -56,11 +56,9 @@ const BuildForm = () => {
       <div class="mx-auto w-50 p-3 mw-70">
         <h1>Login</h1>
         <Form onSubmit={handleSubmit}>
-          <Alert
-            variant="danger"
-            style={{ display: "none" }}
-            id="myAlert"
-          ></Alert>
+          <Alert variant="danger" show={showAlert}>
+            {alertText}
+          </Alert>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
