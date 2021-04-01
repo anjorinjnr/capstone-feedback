@@ -38,11 +38,11 @@ const ProjectLayout = () => {
   return (
     <>
       <Container>
-        <Row>
+        <Row id="project_name">
           <h3>{name}</h3>
         </Row>
         <Row className="bg-light">
-          <Col>
+          <Col id="project_author">
             <p>Created By</p>
             <p>{author}</p>
           </Col>
@@ -71,7 +71,7 @@ const ProjectLayout = () => {
 
         <Row>
           <Col>
-            <div>
+            <div id="project_abstract">
               <h5>Project Abstract</h5>
               <p>{abstract}</p>
             </div>
@@ -101,7 +101,7 @@ const ProjectLayout = () => {
               <Card.Header>
                 <b>Author(s)</b>
               </Card.Header>
-              <Card.Body>
+              <Card.Body id="project_authors">
                 {authors.map((auz) => {
                   return (
                     <>
@@ -110,7 +110,7 @@ const ProjectLayout = () => {
                   );
                 })}
               </Card.Body>
-              <Card.Footer className="text-muted">
+              <Card.Footer className="text-muted" id="project_tags">
                 <b>{tags}</b>
               </Card.Footer>
             </Card>

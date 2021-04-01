@@ -95,8 +95,12 @@ const MainSignup = () => {
     <>
       <div className="mx-auto w-50 p-3 mw-70">
         <h1>Signup</h1>
-        <Form onSubmit={handlesubmit}>
-          <Alert variant="danger" show={showAlert}>
+        <Form id="signupForm" onSubmit={handlesubmit}>
+          <Alert
+            className="alert alert-danger"
+            variant="danger"
+            show={showAlert}
+          >
             {alertText.map((text) => {
               return (
                 <>

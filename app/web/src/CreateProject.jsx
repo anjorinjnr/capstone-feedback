@@ -75,8 +75,12 @@ const CreateProjectForm = () => {
     <>
       <div className="mx-auto w-50 p-3 mw-70">
         <h3>Submit Project</h3>
-        <Form onSubmit={handleSubmit}>
-          <Alert variant="danger" show={showAlert}>
+        <Form onSubmit={handleSubmit} id="createProjectForm">
+          <Alert
+            className="alert alert-danger"
+            variant="danger"
+            show={showAlert}
+          >
             {alertText.map((text) => {
               return (
                 <>

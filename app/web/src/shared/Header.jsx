@@ -58,10 +58,10 @@ const Header = () => {
           <Nav id="every">
             {show ? (
               <>
-                <Nav.Link href="/" onClick={handleLogout}>
+                <Nav.Link id="logout" href="/" onClick={handleLogout}>
                   Logout
                 </Nav.Link>
-                <Navbar.Text>{name}</Navbar.Text>
+                <Navbar.Text id="username">{name}</Navbar.Text>
               </>
             ) : (
               <>

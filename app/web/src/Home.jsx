@@ -28,7 +28,7 @@ const Showcase = () => {
   }, []);
   return (
     <>
-      <CardGroup>
+      <CardGroup className="showcase">
         {projects.map((project) => {
           const { abstract, authors, id, name, tags } = project;
 

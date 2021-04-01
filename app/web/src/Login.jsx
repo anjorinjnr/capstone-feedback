@@ -55,8 +55,12 @@ const BuildForm = () => {
     <>
       <div class="mx-auto w-50 p-3 mw-70">
         <h1>Login</h1>
-        <Form onSubmit={handleSubmit}>
-          <Alert variant="danger" show={showAlert}>
+        <Form onSubmit={handleSubmit} id="loginForm">
+          <Alert
+            className="alert alert-danger"
+            variant="danger"
+            show={showAlert}
+          >
             {alertText}
           </Alert>
           <Form.Group controlId="formBasicEmail">
