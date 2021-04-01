@@ -19,8 +19,6 @@ const CreateProjectForm = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState([]);
 
-  const myAlert = document.getElementById("myAlert");
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -69,12 +67,6 @@ const CreateProjectForm = () => {
         } else {
           setShowAlert(true);
           setAlertText(response.errors);
-          // let errorData = response.errors
-          //   .map((item) => {
-          //     return `${item}<br>`;
-          //   })
-          //   .join("");
-          // myAlert.innerHTML = errorData;
         }
       })
       .catch((e) => console.log(e));
