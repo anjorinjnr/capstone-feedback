@@ -33,7 +33,7 @@ const Showcase = ({ props }) => {
               <Card key={id}>
                 <Card.Body>
                   <Card.Title>
-                    <Card.Link href={`/projects/${id}`}>{name}</Card.Link>
+                    <Card.Link href={`/project/${id}`}>{name}</Card.Link>
                   </Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
                     {authors}
