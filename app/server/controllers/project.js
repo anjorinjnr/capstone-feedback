@@ -29,7 +29,7 @@ router.post('/projects/submit', (req, res) => {
 });
 
 
-router.get('/projects/:id', (req, res) => {
+router.get('/project/:id', (req, res) => {
 
     const check = getById(req.params.id)
   res.render("Project", {us: req.session.user, dat: check, dat2: user.getById(check.createdBy)});
