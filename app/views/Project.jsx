@@ -4,7 +4,6 @@ import Layout from "./shared/Layout";
 
 const ProjectLayout = ({ dat, dat2 }) => {
   const { name, abstract, authors, tags } = dat;
-
   return (
     <>
       <Container>
@@ -14,7 +13,7 @@ const ProjectLayout = ({ dat, dat2 }) => {
         <Row className="bg-light">
           <Col id="project_author">
             <p>Created By</p>
-            <p>{dat2.firstname}</p>
+            <p>{`${dat2.firstname} ${dat2.lastname}`}</p>
           </Col>
 
           <Col>

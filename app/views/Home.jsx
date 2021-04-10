@@ -23,27 +23,24 @@ const Showcase = ({ props }) => {
   return (
     <>
       <CardGroup className="showcase">
-        {props
-          .reverse()
-          .slice(0, 4)
-          .map((project) => {
-            const { abstract, authors, id, name, tags } = project;
+        {props.slice(0, 4).map((project) => {
+          const { abstract, authors, id, name, tags } = project;
 
-            return (
-              <Card key={id}>
-                <Card.Body>
-                  <Card.Title>
-                    <Card.Link href={`/project/${id}`}>{name}</Card.Link>
-                  </Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
-                    {authors}
-                  </Card.Subtitle>
-                  <Card.Text>{abstract}</Card.Text>
-                  <Card.Link href="#">{tags}</Card.Link>
-                </Card.Body>
-              </Card>
-            );
-          })}
+          return (
+            <Card key={id}>
+              <Card.Body>
+                <Card.Title>
+                  <Card.Link href={`/project/${id}`}>{name}</Card.Link>
+                </Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  {authors}
+                </Card.Subtitle>
+                <Card.Text>{abstract}</Card.Text>
+                <Card.Link href="#">{tags}</Card.Link>
+              </Card.Body>
+            </Card>
+          );
+        })}
       </CardGroup>
     </>
   );
