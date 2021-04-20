@@ -32,7 +32,7 @@ router.get("/project/:id", async (req, res) => {
   res.render("Project", {
     us: req.session.user,
     dat: check,
-    dat2: user.getById(check.createdBy),
+    dat2: await user.getById(check.createdBy),
   });
 });
 
