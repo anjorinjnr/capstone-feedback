@@ -14,7 +14,7 @@ router.post("/projects/submit", async (req, res) => {
   const tags = req.body.tags.split(",");
   const authors = req.body.authors.split(",");
   const { name, abstract } = req.body;
-  const createdBy = req.session.user.id;
+  const createdBy = req.session.user._id;
 
   const check = await create({ name, abstract, authors, tags, createdBy });
 
