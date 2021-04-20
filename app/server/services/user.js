@@ -10,24 +10,22 @@ const create = async ({
   program,
   graduationYear,
 }) => {
-  const user = new User();
-  user.firstname = firstname;
-  user.lastname = lastname;
-  user.email = email;
-  user.matricNumber = matricNumber;
-  user.program = program;
-  user.graduationYear = graduationYear;
-  user.setPassword(password);
+  try {
+    const user = new User();
+    user.firstname = firstname;
+    user.lastname = lastname;
+    user.email = email;
+    user.matricNumber = matricNumber;
+    user.program = program;
+    user.graduationYear = graduationYear;
+    user.setPassword(password);
 
-  user
-    .save()
-    .then((res) => {
-      console.log(res);
+    if (await user.save()) {
       return [true, user];
-    })
-    .catch((e) => {
-      return [false, translateError(e)];
-    });
+    }
+  } catch (e) {
+    return [false, translateError(e)];
+  }
 };
 
 /* Authenticate a user */

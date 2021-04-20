@@ -34,12 +34,13 @@ router.post("/signup", async (req, res) => {
     program,
     graduationYear,
   });
+  console.log(check[0]);
 
   if (check[0]) {
     req.session.user = check[1];
     res.redirect("/");
   } else {
-    req.flash("error", check[1]);
+    req.flash("error", await check[1]);
     res.redirect(303, "/signup");
   }
 });

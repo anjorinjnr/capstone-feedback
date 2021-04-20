@@ -8,7 +8,7 @@ const create = async ({ name, abstract, authors, tags, createdBy }) => {
     .save()
     .then((res) => {
       console.log(res);
-      return [true, project];
+      return [true, res];
     })
     .catch((e) => {
       return [false, translateError(e)];
