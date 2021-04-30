@@ -62,6 +62,6 @@ register(app).then(() => {
   );
 
   app.listen(process.env.PORT || SERVER_PORT, () =>
-    console.log("Server listening on port " + SERVER_PORT)
+    console.log("Server listening on port ")
   );
 });
