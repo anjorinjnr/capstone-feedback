@@ -100,6 +100,7 @@ const ProjectLayout = ({ dat, dat2 }) => {
           </Col>
         </Row>
       </Container>
+      <br />
     </>
   );
 };

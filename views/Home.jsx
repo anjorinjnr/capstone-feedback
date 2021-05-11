@@ -45,6 +45,7 @@ const Showcase = ({ props }) => {
             );
           })}
       </CardGroup>
+      <br />
     </>
   );
 };

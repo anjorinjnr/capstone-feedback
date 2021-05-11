@@ -50,9 +50,24 @@ const getAll = async () => {
   return await User.find();
 };
 
+/* Return user with specified email */
+const getByEmail = async (email) => {
+  return await User.findOne({ email: email });
+};
+
+/* update user with specified email */
+// const getByEmailAndUpdate = async (email, password) => {
+//   const result = await User.findOne({ email });
+
+//   let newPass = await result.setPassword(password);
+//   console.log(newPass);
+
+//   // return await User.findOneAndUpdate({ email: email }, {});
+// };
 module.exports = {
   create,
   authenticate,
   getById,
   getAll,
+  getByEmail,
 };
