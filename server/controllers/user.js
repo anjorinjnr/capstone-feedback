@@ -1,7 +1,9 @@
 const express = require("express");
 const { getPrograms, getGradYears } = require("../services/school");
 const user = require("../services/user");
+const session = require("express-session");
 const passport = require("passport");
+const person = require("../models/user");
 const facebookStrategy = require("passport-facebook").Strategy;
 
 const router = express.Router();
@@ -125,51 +127,14 @@ router.use(passport.session());
 passport.use(
   new facebookStrategy(
     {
-      clientID: FACEBOOK_APP_SECRET,
-      clientSecret: FACEBOOK_APP_ID,
+      clientID: FACEBOOK_APP_ID,
+      clientSecret: FACEBOOK_APP_SECRET,
       callbackURL: "http://localhost:4000/facebook/callback",
-      profileFields: [
-        "first_name",
-        "last_name",
-        "email",
-        "password",
-        "id",
-        "email",
-      ],
+      profileFields: ["email", "id", "first_name", "last_name"],
     },
-
-    function (token, refreshToken, profile, done) {
-      console.log(profile, "first");
-      process.nextTick(function () {
-        user.findOne({ email: profile.email }, function (err, User) {
-          if (err) return done(err);
-
-          if (User) {
-            console.log("user found");
-            console.log(User);
-            return done(null, User);
-          } else {
-            console.log(profile, "second");
-            console.log(User);
-            const { first_name, last_name, email, password, id } = profile;
-            const newUser = user.create(
-              first_name,
-              last_name,
-              email,
-              password,
-              id,
-              email
-            );
-
-            if (newUser[0]) {
-              req.session.user = newUser[1];
-              return done(null, newUser);
-            } else {
-              req.flash("error", newUser[1]);
-              res.redirect(303, "/login");
-            }
-          }
-        });
+    function (accessToken, refreshToken, profile, done) {
+      process.nextTick(async function () {
+        console.log(profile._json);
       });
     }
   )
@@ -180,7 +145,7 @@ passport.serializeUser(function (User, done) {
 });
 
 passport.deserializeUser(function (id, done) {
-  user.findById(id, function (err, user) {
+  person.findById(id, function (err, user) {
     done(err, user);
   });
 });
