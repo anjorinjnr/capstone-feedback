@@ -96,38 +96,43 @@ passport.use(
       callbackURL: "http://localhost:4000/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
-      process.nextTick(async function () {
-        const { sub, name, given_name, family_name, email } = profile._json;
-        User.findOne({ email: email }, function (err, person) {
-          if (err) {
-            return done(err);
-          }
-          if (person) {
-            return done(null, person);
-          } else {
-            let newUser = new User();
-            newUser.firstname = given_name;
-            newUser.lastname = family_name;
-            newUser.email = email;
-            newUser.matricNumber = sub;
-            newUser.setPassword(name);
+      // There's no need for process.nextTick here
+      const { sub, name, given_name, family_name, email } = profile._json;
+      User.findOne({ email: email }, function (err, person) {
+        if (err) {
+          return done(err);
+        }
+        if (person) {
+          return done(null, person);
+        } else {
+          let newUser = new User();
+          newUser.firstname = given_name;
+          newUser.lastname = family_name;
+          newUser.email = email;
+          newUser.matricNumber = sub;
+          newUser.setPassword(name);
 
-            newUser.save(function (err) {
-              if (err) {
-                throw err;
-              }
-              return done(null, newUser);
-            });
-          }
-        });
+          newUser.save(function (err) {
+            if (err) {
+              throw err;
+            }
+            return done(null, newUser);
+          });
+        }
       });
     }
   )
 );
 
 passport.serializeUser(function (person, done) {
-  console.log(person);
-  session.user = person;
+  // this is not doing what you think it is.
+  // to add  something to the session you need the req object so you can do
+  // req.session.user = person.
+
+  // Also there you mixing two patterns
+  // manually adding the user to the server vs
+  // letting passport handle that for you.
+  session.user = person; 
 
   done(null, person.sub);
 });
@@ -149,6 +154,9 @@ router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   function (req, res) {
+    // the user will already in the req object here
+    // so manually add it to the session you can do this
+    req.session.user = req.user;
     res.redirect("/");
   }
 );
