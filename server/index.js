@@ -43,6 +43,7 @@ register(app).then(() => {
   app.use(flash());
   app.use("/", require("./controllers/home"));
   app.use("/", require("./controllers/user"));
+  app.use("/", require("./controllers/auth"));
 
   app.use("/", require("./controllers/project"));
   app.use(express.static("public"));

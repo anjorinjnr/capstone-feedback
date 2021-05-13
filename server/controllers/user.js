@@ -1,15 +1,8 @@
 const express = require("express");
 const { getPrograms, getGradYears } = require("../services/school");
 const user = require("../services/user");
-const session = require("express-session");
-const passport = require("passport");
-const User = require("../models/user");
-const facebookStrategy = require("passport-facebook").Strategy;
-const GoogleStrategy = require("passport-google-oauth").OAuthStrategy;
 
 const router = express.Router();
-const FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET;
-const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
 
 router.get("/signup", (req, res) => {
   const programs = getPrograms();
@@ -113,82 +106,5 @@ router.post("/resetpassword", async (req, res) => {
   // const ispass = await user.authenticate(emailKeeper.email, password);
   // console.log(ispass)
 });
-
-// FaceBook Authentication
-// router.use(
-//   session({
-//     secret: "ilovescotchscotchyscotchscotch",
-//     resave: true,
-//     saveUninitialized: true,
-//   })
-// );
-router.use(passport.initialize());
-router.use(passport.session());
-
-passport.use(
-  new facebookStrategy(
-    {
-      clientID: FACEBOOK_APP_ID,
-      clientSecret: FACEBOOK_APP_SECRET,
-      callbackURL: "http://localhost:4000/facebook/callback",
-      profileFields: ["email", "id", "first_name", "last_name"],
-    },
-    function (accessToken, refreshToken, profile, done) {
-      process.nextTick(async function () {
-        const { email, id, first_name, last_name } = profile._json;
-        User.findOne({ email: email }, function (err, person) {
-          if (err) {
-            return done(err);
-          }
-          if (person) {
-            console.log("user found");
-            console.log(person);
-            return done(null, person);
-          } else {
-            let newUser = new User();
-            newUser.firstname = first_name;
-            newUser.lastname = last_name;
-            newUser.email = email;
-            newUser.matricNumber = id;
-            newUser.setPassword(id);
-
-            newUser.save(function (err) {
-              if (err) {
-                throw err;
-              }
-              return done(null, newUser);
-            });
-          }
-        });
-      });
-    }
-  )
-);
-
-passport.serializeUser(function (person, done) {
-  session.user = person;
-  done(null, person.id);
-});
-
-passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
-
-router.get(
-  "/auth/facebook",
-  passport.authenticate("facebook", { scope: "email" })
-);
-
-router.get(
-  "/facebook/callback",
-  passport.authenticate("facebook", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-  })
-);
-
-// Google Authentication
 
 module.exports = router;
